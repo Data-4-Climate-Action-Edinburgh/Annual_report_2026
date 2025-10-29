@@ -1,0 +1,40 @@
+```markdown
+---
+title: "Edinburgh — HadUK area-average temperature: 5-mile radius around 14 Forth St"
+format: html
+---
+
+This Quarto notebook documents the extraction and example plots for the HadUK-Grid data used in the project.
+
+Prerequisites
+- Run the extraction script to create CSVs:
+  Rscript code/extract_edinburgh_5mile.R
+
+Then open the CSVs and produce plots below.
+```
+
+```r
+# load dependencies
+library(tidyverse)
+library(lubridate)
+
+# read combined daily csv
+daily_file <- here::here("edinburgh_area_daily_combined.csv")
+monthly_file <- here::here("edinburgh_area_tas_monthly.csv")
+
+if (file.exists(daily_file)) {
+  daily <- read_csv(daily_file, show_col_types = FALSE) %>% mutate(date = as.Date(date))
+  daily %>%
+    filter(var == "tasmax", date >= as.Date("2024-01-01")) %>%
+    ggplot(aes(date, mean_value)) + geom_line() + labs(title = "Daily tasmax (area average)", y = "°C")
+} else {
+  cat("Daily CSV not found. Run extraction script first.\n")
+}
+
+if (file.exists(monthly_file)) {
+  monthly <- read_csv(monthly_file, show_col_types = FALSE) %>% mutate(date = as.Date(date))
+  monthly %>% ggplot(aes(date, mean_value)) + geom_line() + labs(title = "Monthly mean (area average)", y = "°C")
+} else {
+  cat("Monthly CSV not found. Run extraction script first.\n")
+}
+```

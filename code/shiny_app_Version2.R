@@ -1,0 +1,102 @@
+#!/usr/bin/env Rscript
+# Shiny app to explore HadUK area-averaged temperature series for the 5-mile radius around 14 Forth St.
+# Run with: R -e "shiny::runApp('shiny')"
+#
+# Expects CSVs created by code/extract_edinburgh_5mile.R:
+#   - edinburgh_area_daily_combined.csv
+#   - edinburgh_area_tas_monthly.csv
+
+library(shiny)
+library(tidyverse)
+library(lubridate)
+
+daily_csv <- file.path("edinburgh_area_daily_combined.csv")
+monthly_csv <- file.path("edinburgh_area_tas_monthly.csv")
+
+ui <- fluidPage(
+  titlePanel("Edinburgh — HadUK area-averaged temperatures (5-mile radius around 14 Forth St, land-only)"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Dataset", choices = c("Daily (max/min)" = "daily", "Monthly mean" = "monthly")),
+      uiOutput("var_ui"),
+      dateRangeInput("daterange", "Date range", start = "2024-01-01", end = Sys.Date()),
+      actionButton("reload", "Reload CSVs"),
+      hr(),
+      helpText("If CSVs do not exist run code/extract_edinburgh_5mile.R first to create them."),
+      checkboxInput("show_points", "Show points (n_cells)", value = FALSE)
+    ),
+    mainPanel(
+      plotOutput("timeplot", height = "500px"),
+      verbatimTextOutput("summary")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  data_daily <- reactiveVal(NULL)
+  data_monthly <- reactiveVal(NULL)
+
+  load_csvs <- function() {
+    if (file.exists(daily_csv)) {
+      dd <- read_csv(daily_csv, show_col_types = FALSE) %>% mutate(date = as.Date(date))
+      data_daily(dd)
+    } else {
+      data_daily(NULL)
+    }
+    if (file.exists(monthly_csv)) {
+      dm <- read_csv(monthly_csv, show_col_types = FALSE) %>% mutate(date = as.Date(date))
+      data_monthly(dm)
+    } else {
+      data_monthly(NULL)
+    }
+  }
+
+  load_csvs()
+
+  observeEvent(input$reload, { load_csvs() })
+
+  output$var_ui <- renderUI({
+    if (input$dataset == "daily") {
+      selectInput("variable", "Variable", choices = c("tasmax", "tasmin"), selected = "tasmax")
+    } else {
+      selectInput("variable", "Variable", choices = c("tas" = "tas"), selected = "tas")
+    }
+  })
+
+  filtered_data <- reactive({
+    if (input$dataset == "daily") {
+      df <- data_daily()
+      req(df)
+      df %>% filter(var == input$variable, date >= input$daterange[1], date <= input$daterange[2])
+    } else {
+      df <- data_monthly()
+      req(df)
+      df %>% filter(var == "tas", date >= input$daterange[1], date <= input$daterange[2])
+    }
+  })
+
+  output$timeplot <- renderPlot({
+    df <- filtered_data()
+    req(df)
+    p <- ggplot(df, aes(x = date, y = mean_value)) +
+      geom_line(color = "steelblue") +
+      geom_point(size = 1, alpha = 0.8) +
+      labs(x = "Date", y = "Temperature (°C)", title = paste0("Area-averaged temperature for 5-mile radius around 14 Forth St (land-only)")) +
+      theme_minimal()
+    if (input$show_points) {
+      p <- p + geom_point(aes(size = n_cells), color = "darkred", alpha = 0.6)
+    }
+    p
+  })
+
+  output$summary <- renderPrint({
+    df <- filtered_data()
+    req(df)
+    cat("Observations:", nrow(df), "\n")
+    cat("Date range:", min(df$date), "to", max(df$date), "\n")
+    cat("Mean temperature (period):", round(mean(df$mean_value, na.rm = TRUE), 2), "°C\n")
+    cat("Median:", round(median(df$mean_value, na.rm = TRUE), 2), "°C\n")
+    cat("Missing rows:", sum(is.na(df$mean_value)), "\n")
+  })
+}
+shinyApp(ui, server)
