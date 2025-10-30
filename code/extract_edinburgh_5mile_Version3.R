@@ -4,6 +4,8 @@
 # within 5 miles of 14 Forth St, Edinburgh. Produces CSVs consumed by the Shiny app.
 # Adds land-only masking using sf + rnaturalearth.
 #
+# Created using GitHub Copilot, checked and debugged by Pauline Ward Oct 2025
+#
 # Usage:
 #   Rscript code/extract_edinburgh_5mile.R
 #
@@ -19,8 +21,8 @@ library(sf)
 library(rnaturalearth)
 
 # CONFIG
-data_dir <- here("open_data", "temperature_HadUK_Grid")
-output_dir <- here()
+data_dir <- here("open_data", "temperature")
+output_dir <- here("open_data", "temperature")
 # 14 Forth St coordinate (as requested)
 site_name <- "14 Forth St, Edinburgh"
 site_lat <- 55.91174

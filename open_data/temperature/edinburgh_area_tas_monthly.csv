@@ -1,0 +1,16 @@
+date,mean_value,n_cells,file,var,site,site_lat,site_lon
+1991-01-16,3.6803988185589818,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-02-16,3.9746940174895995,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-03-16,5.629077113990592,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-04-16,7.60537843201418,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-05-16,10.28805893295055,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-06-16,13.038419494459552,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-07-16,14.857753779217374,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-08-16,14.56990014635585,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-09-16,12.589217893260289,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-10-16,9.285194649695564,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-11-16,6.000981238030296,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+1991-12-16,3.7650477894460863,201,tas_hadukgrid_uk_1km_mon-30y_199101-202012.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+2025-01-16,2.9105935167910446,201,tas_hadukgrid_uk_1km_mon_202501.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+2025-08-16,16.07722131529851,201,tas_hadukgrid_uk_1km_mon_202508.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
+2025-09-16,12.670674945584578,201,tas_hadukgrid_uk_1km_mon_202509.nc,tas,"14 Forth St, Edinburgh",55.91174,-3.2771
