@@ -19,8 +19,8 @@ library(sf)
 library(rnaturalearth)
 
 # CONFIG
-data_dir <- here("open_data", "temperature_HadUK_Grid")
-output_dir <- here()
+data_dir <- here("open_data", "temperature")
+output_dir <- here("open_data", "temperature")
 # 14 Forth St coordinate (as requested)
 site_name <- "14 Forth St, Edinburgh"
 site_lat <- 55.91174
