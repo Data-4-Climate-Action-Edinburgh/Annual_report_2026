@@ -4,6 +4,8 @@
 # within 5 miles of 14 Forth St, Edinburgh. Produces CSVs consumed by the Shiny app.
 # Adds land-only masking using sf + rnaturalearth.
 #
+# Created using GitHub Copilot, checked and debugged by Pauline Ward Oct 2025
+#
 # Usage:
 #   Rscript code/extract_edinburgh_5mile.R
 #
